@@ -1,70 +1,33 @@
-# Integración continua Travis CI
+# Continuous integration: Travis CI
 
-# Lenguaje de programación
-
-language: python
-python:
-   - "3.6"
-
-# Sistema operativo destino a probar
+language: python 3.6
 
 os: linux
-
-# Distribución del sistema operativo
-
 dist: xenial
-
-# Requerimiento de permisos en Linux
-
 sudo: enabled
 
-# Compiladores a emplear
-
 compiler:
-#  - gcc
    - clang
 
-# Tareas a realizar antes de instalacción
-
 before_install:
-
-# Actualizar
-
   - sudo apt-get -qq update
 
-# Configurar Git si no lo está
-
+# Configure git
   - if [ ! `git config --get user.email` ]; then `git config --global user.email 'user@example.com'`; fi
   - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
 
-# En caso de requerir instalar algo para la prueba
-
 install:
-
-# Instalar dependencias
-
-  - sudo apt-get install python3-pip
-  - sudo python -m pip install setuptools
-  - sudo python -m pip install datetime
-
-# Tareas a ejecutar antes de nuestra prueba
+# Install dependencies
+  - python -m pip -r install requirements.txt
 
 before_script:
-
   - cd programs
 
-# Compilamos
-
 script:
-
-# En caso de compilación exitosa
-  - cd
-
-after_success:
-
   - cd ..
 
-# Notificaciones por correo
+
+after_success:
 
 notifications:
 email: true
