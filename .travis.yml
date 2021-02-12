@@ -16,9 +16,12 @@ before_install:
   - if [ ! `git config --get user.email` ]; then `git config --global user.email 'user@example.com'`; fi
   - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
 
+# Upgrade pip
+  - python -m pip install --upgrade pip
+  
 install:
 # Install dependencies
-  - sudo pip install -r requirements.txt
+  - pip install -r requirements.txt
 
 before_script:
   - cd programs
