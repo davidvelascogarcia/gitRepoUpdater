@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>gitRepoUpdater &mdash; Git Repo Updater v1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Git Repo Updater
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../docs/gitRepoUpdater.html">gitRepoUpdater module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Git Repo Updater</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>gitRepoUpdater</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gitRepoUpdater</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">  * ***************************************************************</span>
+<span class="sd">  *      Program: Git Repo Updater</span>
+<span class="sd">  *      Type: Python</span>
+<span class="sd">  *      Author: David Velasco Garcia @davidvelascogarcia</span>
+<span class="sd">  * ***************************************************************</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="c1"># Libraries</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">halo</span> <span class="kn">import</span> <span class="n">Halo</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+
+
+<div class="viewcode-block" id="GitRepoUpdater"><a class="viewcode-back" href="../docs/gitRepoUpdater.html#gitRepoUpdater.GitRepoUpdater">[docs]</a><span class="k">class</span> <span class="nc">GitRepoUpdater</span><span class="p">:</span>
+
+    <span class="c1"># Function: Constructor</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Build Halo spinner</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span> <span class="o">=</span> <span class="n">Halo</span><span class="p">(</span><span class="n">spinner</span><span class="o">=</span><span class="s1">&#39;dots&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Function: getSystemPlatform</span>
+<div class="viewcode-block" id="GitRepoUpdater.getSystemPlatform"><a class="viewcode-back" href="../docs/gitRepoUpdater.html#gitRepoUpdater.GitRepoUpdater.getSystemPlatform">[docs]</a>    <span class="k">def</span> <span class="nf">getSystemPlatform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Get system configuration</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Detecting system and release version ...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">systemPlatform</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span>
+        <span class="n">systemRelease</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configuration detected:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Platform:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">systemPlatform</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Release:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">systemRelease</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">systemPlatform</span><span class="p">,</span> <span class="n">systemRelease</span></div>
+
+    <span class="c1"># Function: repoUpdater</span>
+<div class="viewcode-block" id="GitRepoUpdater.repoUpdater"><a class="viewcode-back" href="../docs/gitRepoUpdater.html#gitRepoUpdater.GitRepoUpdater.repoUpdater">[docs]</a>    <span class="k">def</span> <span class="nf">repoUpdater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># Get initial time</span>
+        <span class="n">initialTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Update Local Repositories&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+
+        <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[INFO] Searching local repositories ...</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span>
+
+        <span class="c1"># Go to root path</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;./../../&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[[ERROR] Error moving to root path.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span>
+
+        <span class="c1"># Variable to count repo updated</span>
+        <span class="n">repoUpdatedCount</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Update all local repositories in root path</span>
+        <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
+
+            <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[INFO] Local repo founded: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Updating repo &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">repo</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+
+            <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[INFO] Updating repo &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">repoUpdatedCount</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot; ...</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;yellow&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span>
+
+            <span class="c1"># Move to local path</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">repo</span><span class="p">))</span>
+
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[ERROR] Error moving to &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; repo.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span>
+
+            <span class="c1"># Execute update repo</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;git pull&quot;</span><span class="p">)</span>
+
+                <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[INFO] &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; repo updated correctly.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span>
+
+            <span class="k">except</span><span class="p">:</span>
+
+                <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[ERROR] Error updating &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; repo.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span>
+
+            <span class="c1"># Return to root path</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;./../&quot;</span><span class="p">)</span>
+
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[ERROR] Error moving to root path.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span>
+
+            <span class="c1"># Count repoUpdatedCount + 1</span>
+            <span class="n">repoUpdatedCount</span> <span class="o">=</span> <span class="n">repoUpdatedCount</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Local Repositories Updated&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+
+        <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[INFO] Local repositories updated correctly.</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span>
+
+        <span class="c1"># Get end time and elapsedTime</span>
+        <span class="n">endTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">elapsedTime</span> <span class="o">=</span> <span class="n">endTime</span> <span class="o">-</span> <span class="n">initialTime</span>
+
+        <span class="n">systemResponseMessage</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[INFO] Elapsed time: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">systemResponse</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">systemResponseMessage</span><span class="p">)</span></div></div>
+
+
+<span class="c1"># Function: main</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../docs/gitRepoUpdater.html#gitRepoUpdater.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                       Program: Git Repo Updater                          &quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                     Author: David Velasco Garcia                         &quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                             @davidvelascogarcia                          &quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Loading Git Repo Updater engine ...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Build cryptoFileSecurityEncoder object</span>
+    <span class="n">gitRepoUpdater</span> <span class="o">=</span> <span class="n">GitRepoUpdater</span><span class="p">()</span>
+
+    <span class="c1"># Get system platform</span>
+    <span class="n">systemPlatform</span><span class="p">,</span> <span class="n">systemRelease</span> <span class="o">=</span> <span class="n">gitRepoUpdater</span><span class="o">.</span><span class="n">getSystemPlatform</span><span class="p">()</span>
+
+    <span class="c1"># Update repos</span>
+    <span class="n">gitRepoUpdater</span><span class="o">.</span><span class="n">repoUpdater</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">**************************************************************************&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Program finished&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**************************************************************************&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">gitRepoUpdater program finished correctly.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">userExit</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># Call main function</span>
+    <span class="n">main</span><span class="p">()</span>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, David Velasco Garcia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

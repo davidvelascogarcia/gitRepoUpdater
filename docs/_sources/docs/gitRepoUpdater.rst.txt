@@ -1,0 +1,7 @@
+gitRepoUpdater module
+=====================
+
+.. automodule:: gitRepoUpdater
+   :members:
+   :undoc-members:
+   :show-inheritance:
