@@ -10,6 +10,7 @@
 ## Introduction
 
 `gitRepoUpdater` is a simple script in `python` language that seek for local git repositories dirs in root path and try to update all founded git repositories.
+Documentation available on [docs](https://davidvelascogarcia.github.io/gitRepoUpdater/).
 
 ## Running Software
 
